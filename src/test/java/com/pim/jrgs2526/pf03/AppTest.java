@@ -26,11 +26,12 @@ public class AppTest {
         Assertions.assertEquals(App.NOTA_SUSPENSA, resultado);
     }
 
-    @Test
-    public void testCalcularError() {
+    @ParameterizedTest
+    @ValueSource(ints = {-1, 11, 63})
+    public void testCalcularError(int notaInvalida) {
         App main = new App();
         try {
-            int resultado = main.calcularNota(63);
+            int resultado = main.calcularNota(notaInvalida);
         }
         catch (IllegalArgumentException e) {
             Assertions.assertEquals(App.ERROR_AL_CALCULAR_LA_NOTA, e.getMessage());
