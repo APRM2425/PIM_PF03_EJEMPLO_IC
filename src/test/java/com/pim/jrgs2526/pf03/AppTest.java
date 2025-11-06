@@ -3,23 +3,27 @@ package com.pim.jrgs2526.pf03;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Unit test for simple App.
  */
 public class AppTest {
-    @Test
-    public void testCalcularAprobado() {
+    @ParameterizedTest
+    @ValueSource(ints =  {5, 6, 7, 8, 9, 10})
+    public void testCalcularAprobado(int nota) {
         App main = new App();
-        int resultado = main.calcularNota(6);
-        Assertions.assertEquals(1, resultado);
+        int resultado = main.calcularNota(nota);
+        Assertions.assertEquals(App.NOTA_APROBADA, resultado);
     }
 
-    @Test
-    public void testCalcularSuspenso() {
+    @ParameterizedTest
+    @ValueSource(ints =  {0, 1, 2,3,4})
+    public void testCalcularSuspenso(int nota) {
         App main = new App();
-        int resultado = main.calcularNota(2);
-        Assertions.assertEquals(-1, resultado);
+        int resultado = main.calcularNota(nota);
+        Assertions.assertEquals(App.NOTA_SUSPENSA, resultado);
     }
 
     @Test
@@ -29,7 +33,7 @@ public class AppTest {
             int resultado = main.calcularNota(63);
         }
         catch (IllegalArgumentException e) {
-            Assertions.assertEquals("Error al calcular la nota", e.getMessage());
+            Assertions.assertEquals(App.ERROR_AL_CALCULAR_LA_NOTA, e.getMessage());
             return;
         }
         Assertions.fail();
